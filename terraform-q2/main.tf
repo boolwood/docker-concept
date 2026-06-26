@@ -13,23 +13,23 @@ resource "aws_security_group" "backend_sg" {
   name = "backend-sg"
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port = 8000
-    to_port = 8000
-    protocol = "tcp"
+    from_port   = 5000
+    to_port     = 5000
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -38,23 +38,23 @@ resource "aws_security_group" "frontend_sg" {
   name = "frontend-sg"
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port = 3000
-    to_port = 3000
-    protocol = "tcp"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -72,7 +72,7 @@ resource "aws_instance" "backend" {
   user_data = file("${path.module}/backend_userdata.sh")
 
   tags = {
-    Name="Backend-EC2"
+    Name = "Backend-EC2"
   }
 
 }
@@ -87,12 +87,12 @@ resource "aws_instance" "frontend" {
 
   vpc_security_group_ids = [aws_security_group.frontend_sg.id]
 
-  user_data = replace(file("${path.module}/frontend_userdata.sh"),"BACKEND_PRIVATE_IP",aws_instance.backend.private_ip)
+  user_data = replace(file("${path.module}/frontend_userdata.sh"), "BACKEND_PRIVATE_IP", aws_instance.backend.private_ip)
 
-  depends_on=[aws_instance.backend]
+  depends_on = [aws_instance.backend]
 
   tags = {
-    Name="Frontend-EC2"
+    Name = "Frontend-EC2"
   }
 
 }

@@ -1,16 +1,8 @@
-#!/bin/bash
+[ec2-user@ip-172-31-24-137 frontend]$ cat frontend.log
+nohup: ignoring input
 
-dnf update -y
-dnf install -y git nodejs
+> frontend@1.0.0 start
+> node index.js
 
-cd /home/ec2-user
-
-git clone https://github.com/boolwood/docker-concept.git
-
-cd docker-concept/frontend
-
-npm install
-
-export BACKEND_URL=http://BACKEND_PRIVATE_IP:5000/api
-
-nohup npm start > frontend.log 2>&1 &
+server is running on port 3000
+[ec2-user@ip-172-31-24-137 frontend]$ 
